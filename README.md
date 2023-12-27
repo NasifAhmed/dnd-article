@@ -1,6 +1,8 @@
 
 
-- The code uses TypeScript + React and Vite to bundle. If you don't understand typescript or TSX syntax you can just ignore the type stuff they are not needed in this small example. Its just like regular JSX.
+- The code uses TypeScript + React and Tailwind CSS for styling.
+- If you don't understand typescript or TSX syntax you can just ignore the type stuff they are not needed in this small example. Its just like regular JSX.
+- If you are not familiar with Tailwind CSS, just read the class names they are descriptive and intuitive to understand if you are familiar with CSS. Tailwind just gives you these useful utility classes. Its all CSS underneath.
 
 ## Steps to run on your local machine :
 * You should already have node installed on your machine.
