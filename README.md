@@ -1,5 +1,6 @@
+# This is the source code repo for [this](https://dev.to/nasif2ahmed/drag-and-drop-kanban-board-from-scratch-with-react-1j9a) article over at dev.to
 
-
+## Info
 - The code uses TypeScript + React and Tailwind CSS for styling.
 - If you don't understand typescript or TSX syntax you can just ignore the type stuff they are not needed in this small example. Its just like regular JSX.
 - If you are not familiar with Tailwind CSS, just read the class names they are descriptive and intuitive to understand if you are familiar with CSS. Tailwind just gives you these useful utility classes. Its all CSS underneath.
