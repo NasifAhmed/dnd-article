@@ -1,6 +1,10 @@
 import { useState } from "react";
 
 export default function App() {
+    const [todo, setTodo] = useState<string[]>();
+    const [ongoing, setOngoing] = useState<string[]>();
+    const [completed, setCompleted] = useState<string[]>();
+
     function handleOnDragOver(e: React.DragEvent) {
         e.preventDefault();
     }
@@ -9,20 +13,125 @@ export default function App() {
         e.dataTransfer.setData("name", name);
     }
 
-    function handleOnDrop(e: React.DragEvent) {
-        if (tasks) {
-            setTasks([
-                ...tasks.filter(
+    function handleOnDropTodo(e: React.DragEvent) {
+        // Set the dropped task to todo state
+        if (todo) {
+            setTodo([
+                ...todo.filter(
                     (taskName) => taskName !== e.dataTransfer.getData("name")
                 ),
                 e.dataTransfer.getData("name"),
             ]);
         } else {
-            setTasks([e.dataTransfer.getData("name")]);
+            setTodo([e.dataTransfer.getData("name")]);
         }
+
+        // If dropping from ongoing --> todo
+        // Delete from ongoing
+        ongoing?.forEach((task) => {
+            if (task === e.dataTransfer.getData("name")) {
+                setOngoing([
+                    ...ongoing.filter(
+                        (taskName) =>
+                            taskName !== e.dataTransfer.getData("name")
+                    ),
+                ]);
+            }
+        });
+
+        // If dropping from completed --> todo
+        // Delete from completed
+        completed?.forEach((task) => {
+            if (task === e.dataTransfer.getData("name")) {
+                setCompleted([
+                    ...completed.filter(
+                        (taskName) =>
+                            taskName !== e.dataTransfer.getData("name")
+                    ),
+                ]);
+            }
+        });
     }
 
-    const [tasks, setTasks] = useState<string[]>();
+    function handleOnDropOngoing(e: React.DragEvent) {
+        // Set the dropped task to todo state
+        if (ongoing) {
+            setOngoing([
+                ...ongoing.filter(
+                    (taskName) => taskName !== e.dataTransfer.getData("name")
+                ),
+                e.dataTransfer.getData("name"),
+            ]);
+        } else {
+            setOngoing([e.dataTransfer.getData("name")]);
+        }
+
+        // If dropping from todo --> ongoing
+        // Delete from todo
+        todo?.forEach((task) => {
+            if (task === e.dataTransfer.getData("name")) {
+                setTodo([
+                    ...todo.filter(
+                        (taskName) =>
+                            taskName !== e.dataTransfer.getData("name")
+                    ),
+                ]);
+            }
+        });
+
+        // If dropping from completed --> ongoing
+        // Delete from completed
+        completed?.forEach((task) => {
+            if (task === e.dataTransfer.getData("name")) {
+                setCompleted([
+                    ...completed.filter(
+                        (taskName) =>
+                            taskName !== e.dataTransfer.getData("name")
+                    ),
+                ]);
+            }
+        });
+    }
+
+    function handleOnDropCompleted(e: React.DragEvent) {
+        // Set the dropped task to todo state
+        if (completed) {
+            setCompleted([
+                ...completed.filter(
+                    (taskName) => taskName !== e.dataTransfer.getData("name")
+                ),
+                e.dataTransfer.getData("name"),
+            ]);
+        } else {
+            setCompleted([e.dataTransfer.getData("name")]);
+        }
+
+        // If dropping from todo --> completed
+        // Delete from todo
+        todo?.forEach((task) => {
+            if (task === e.dataTransfer.getData("name")) {
+                setTodo([
+                    ...todo.filter(
+                        (taskName) =>
+                            taskName !== e.dataTransfer.getData("name")
+                    ),
+                ]);
+            }
+        });
+
+        // If dropping from ongoing --> completed
+        // Delete from ongoing
+        ongoing?.forEach((task) => {
+            if (task === e.dataTransfer.getData("name")) {
+                setOngoing([
+                    ...ongoing.filter(
+                        (taskName) =>
+                            taskName !== e.dataTransfer.getData("name")
+                    ),
+                ]);
+            }
+        });
+    }
 
     return (
         <div className="flex flex-col h-screen text-white">
@@ -64,15 +173,64 @@ export default function App() {
                 </div>
             </div>
             <div className="flex-grow bg-black w-full grid grid-cols-3 mx-auto text-white">
+                {/* todo column */}
                 <div className="bg-zinc-900 m-5 flex flex-col">
                     <h1 className="text-center">TODO</h1>
                     <div
                         className="flex-grow flex flex-col gap-5 justify-start items-center border-2 border-white"
                         onDragOver={handleOnDragOver}
-                        onDrop={handleOnDrop}
+                        onDrop={handleOnDropTodo}
                     >
-                        {tasks &&
-                            tasks.map((taskName) => {
+                        {todo &&
+                            todo.map((taskName) => {
+                                return (
+                                    <div
+                                        className="w-[400px] h-[50px] bg-gray-700 border text-center"
+                                        draggable
+                                        onDragStart={(e) => {
+                                            handleOnDrag(e, taskName);
+                                        }}
+                                    >
+                                        {taskName}
+                                    </div>
+                                );
+                            })}
+                    </div>
+                </div>
+                {/* ongoing column */}
+                <div className="bg-zinc-900 m-5 flex flex-col">
+                    <h1 className="text-center">Ongoing</h1>
+                    <div
+                        className="flex-grow flex flex-col gap-5 justify-start items-center border-2 border-white"
+                        onDragOver={handleOnDragOver}
+                        onDrop={handleOnDropOngoing}
+                    >
+                        {ongoing &&
+                            ongoing.map((taskName) => {
+                                return (
+                                    <div
+                                        className="w-[400px] h-[50px] bg-gray-700 border text-center"
+                                        draggable
+                                        onDragStart={(e) => {
+                                            handleOnDrag(e, taskName);
+                                        }}
+                                    >
+                                        {taskName}
+                                    </div>
+                                );
+                            })}
+                    </div>
+                </div>
+                {/* completed column */}
+                <div className="bg-zinc-900 m-5 flex flex-col">
+                    <h1 className="text-center">Completed</h1>
+                    <div
+                        className="flex-grow flex flex-col gap-5 justify-start items-center border-2 border-white"
+                        onDragOver={handleOnDragOver}
+                        onDrop={handleOnDropCompleted}
+                    >
+                        {completed &&
+                            completed.map((taskName) => {
                                 return (
                                     <div
                                         className="w-[400px] h-[50px] bg-gray-700 border text-center"
