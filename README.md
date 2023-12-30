@@ -1,5 +1,8 @@
 # This is the source code repo for [this](https://dev.to/nasif2ahmed/drag-and-drop-kanban-board-from-scratch-with-react-1j9a) article over at dev.to
 
+** Repo is updated to Part 2 of the article
+** Browser the repo for Part 1 only : [here](https://github.com/NasifAhmed/dnd-article/tree/d5414076c5b8c57a32f07e15c351b1be016668aa)
+
 ## Info
 - The code uses TypeScript + React and Tailwind CSS for styling.
 - If you don't understand typescript or TSX syntax you can just ignore the type stuff they are not needed in this small example. Its just like regular JSX.
